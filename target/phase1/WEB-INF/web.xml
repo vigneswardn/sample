@@ -12,8 +12,8 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	<servlet-mapping>
+	<servlet-mapping id="ServletMapping_1485549882024">
 		<servlet-name>jersey</servlet-name>
-		<url-pattern>/phase1/*</url-pattern>
+		<url-pattern>/blogger/*</url-pattern>
 	</servlet-mapping>
 </web-app>
