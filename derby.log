@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sat Jan 28 04:14:49 IST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0159-e21a-439f-00000e0aaa08 
+on database directory /Users/vnagarat/cmad_vnagarat/git-repo/phase1/blogger with class loader sun.misc.Launcher$AppClassLoader@28d93b30 
+Loaded from file:/Users/vnagarat/.m2/repository/org/apache/derby/derby/10.10.1.1/derby-10.10.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_112-b16
+user.dir=/Users/vnagarat/cmad_vnagarat/git-repo/phase1
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.12.3
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
