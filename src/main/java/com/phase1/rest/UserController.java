@@ -1,8 +1,11 @@
 package com.phase1.rest;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -36,7 +39,7 @@ public class UserController {
 		return Response.ok().entity(user).build();
 	}
 	
-	@POST
+	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/addUser/")
@@ -55,5 +58,17 @@ public class UserController {
 		user = impl.updateUser(user);
 		return Response.ok().entity(user).build();
 	}
+	
+	/*@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/inviteUsers/")
+	public Response updateUser(HttpServletRequest request, HttpServletResponse response) {
+		String[] emails = (String[]) request.getAttribute("inviteEmails");
+		for(int i= 0; i< emails.length; i++) {
+			
+		}
+		return Response.ok().build();
+	}*/
 	
 }

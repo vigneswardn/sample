@@ -29,6 +29,25 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Users update(Users user) {
 		EntityManager em = factory.createEntityManager();
+		Users existingUser = em.find(Users.class,user.getUserId());
+		if(user.getEmail() == null) {
+			user.setEmail(existingUser.getEmail());
+		}
+		if(user.getFirstName() == null) {
+			user.setFirstName(existingUser.getFirstName());
+		}
+		if(user.getLastName() == null) {
+			user.setLastName(existingUser.getLastName());
+		}
+		if(user.getPassword() == null) {
+			user.setPassword(existingUser.getPassword());
+		}
+		if(user.getPhone() == null) {
+			user.setPhone(existingUser.getPhone());
+		}
+		if(user.getUserName() == null) {
+			user.setUserName(existingUser.getUserName());
+		}
 		em.getTransaction().begin();
 		user = em.merge(user);
 		em.getTransaction().commit();

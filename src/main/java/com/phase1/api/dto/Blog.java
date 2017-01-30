@@ -1,5 +1,6 @@
 package com.phase1.api.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -39,8 +41,6 @@ public class Blog {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer blogId;
 	
-//	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)  
-//    @JoinTable(name="users_blog", joinColumns=@JoinColumn(name="blogId"), inverseJoinColumns=@JoinColumn(name="userId")) 
 	@ManyToMany(mappedBy="blogs")
 	private List<Users> users;
 	
@@ -51,6 +51,9 @@ public class Blog {
 	private String createdBy;
 	boolean isFavourite;
 	private String[] tags;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Comments> comments = new ArrayList<Comments>();
 	
 	public Integer getBlogId() {
 		return blogId;
@@ -122,6 +125,14 @@ public class Blog {
 
 	public void setTags(String[] tags) {
 		this.tags = tags;
+	}
+
+	public List<Comments> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comments> comments) {
+		this.comments = comments;
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.phase1.api.dto.Blog;
+import com.phase1.api.dto.Comments;
 import com.phase1.biz.BloggerImpl;
 
 @Path("/blog")
@@ -35,11 +36,13 @@ public class BlogController {
 	public Response getBlog() {
 		BloggerImpl impl = new BloggerImpl();
 		List<Blog> blogs = impl.searchBlog("searchContent");
-		Blog blog = new Blog();
+		/*
+		 * pending
+		 */
 		return Response.ok().entity(blogs).build();
 	}
 	
-	@POST
+	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/addBlog/")
@@ -49,24 +52,14 @@ public class BlogController {
 		return Response.ok().entity(blog).build();
 	}
 	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/updateBlog/")
-	public Response updateBlog(Blog blog) {
-		BloggerImpl impl = new BloggerImpl();
-		impl.updateBlog(blog);
-		return Response.ok().entity(blog).build();
-	}
-	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/addComments/")
 	public Response addComments(Blog blog) {
 		BloggerImpl impl = new BloggerImpl();
-		impl.addBlog(blog);
-		return Response.ok().entity(blog).build();
+		impl.addComments(blog);
+		return Response.ok().entity(blog.getComments()).build();
 	}
 	
 	@GET
@@ -75,8 +68,8 @@ public class BlogController {
 	@Path("/getComments/")
 	public Response getComments(Blog blog) {
 		BloggerImpl impl = new BloggerImpl();
-		impl.addBlog(blog);
-		return Response.ok().entity(blog).build();
+		List<Comments> comments = (List<Comments>) impl.getComments(blog);
+		return Response.ok().entity(comments).build();
 	}
 	
 	
