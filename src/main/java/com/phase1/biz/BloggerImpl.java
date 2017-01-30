@@ -1,6 +1,7 @@
 package com.phase1.biz;
 
 import java.util.Date;
+import java.util.List;
 
 import com.phase1.api.bizInterface.Blogger;
 import com.phase1.api.dto.Blog;
@@ -34,6 +35,12 @@ public class BloggerImpl implements Blogger {
 		blog.setModifiedDate(new Date());
 		blog = blogDAO.update(blog);
 		return blog;
+	}
+
+	@Override
+	public List<Blog> searchBlog(String searchContent) {
+		
+		return null;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.phase1.api.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,7 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -44,8 +48,8 @@ public class Users {
 
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private int userId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer userId;
 	
 	private String userName;
 	private String firstName;
@@ -54,70 +58,86 @@ public class Users {
 	private String email;
 	private String phone;
 	
-	@ManyToMany(mappedBy="users",targetEntity=Blog.class,cascade=CascadeType.MERGE,fetch=FetchType.EAGER)
+	//@ManyToMany(mappedBy="users",targetEntity=Blog.class,cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	
+	@JoinTable(name="users_blogs",joinColumns={@JoinColumn(name="userId")},inverseJoinColumns={@JoinColumn(name = "blogId")})
+	@ManyToMany
 	List<Blog> blogs;
 	
-	public int getUserId() {
+
+	
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPhone() {
 		return phone;
 	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
 	public List<Blog> getBlogs() {
+		if(blogs == null) {
+			blogs = new ArrayList<Blog>();
+		}
 		return blogs;
 	}
 
 	public void setBlogs(List<Blog> blogs) {
-//		if(this.blogs != blogs) {
-			this.blogs = blogs;
-//		}	
+		this.blogs = blogs;
 	}
-	
-	
+
 	@Override
     public String toString() {
 		StringBuilder strBuilder = new StringBuilder();
-		strBuilder.append("\n ************** \n");
-		strBuilder.append("User ID: "+this.userId +"\n");
-		strBuilder.append("User Name : " +this.userName+"\n");
-		strBuilder.append("\n ************** \n");
+		strBuilder.append("User ID: "+this.userId+" ");
+		strBuilder.append("User Name : " +this.userName);
 		return strBuilder.toString();
 	}
 

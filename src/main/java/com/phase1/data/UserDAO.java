@@ -8,5 +8,7 @@ public interface UserDAO {
 	
 	public Users update(Users user);
 	
-	public Users read(Users user);
+	public Users readById(Users user);
+	
+	public Users readByName(Users user);
 }

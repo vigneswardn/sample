@@ -4,5 +4,7 @@ import com.phase1.api.dto.Users;
 
 public interface Login {
 
-	public Users getUser(Users user);
+	public Users getUserByName(Users user);
+	
+	public Users getUserById(Users user);
 }

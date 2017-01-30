@@ -15,15 +15,24 @@ import com.phase1.biz.RegisterImpl;
 
 @Path("/user")
 public class UserController {
-
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("getUser/{userId}")
+	@Path("/getUser/{userId}")
 	public Response getUser(@PathParam("userId") String userId) {
 		LoginImpl impl = new LoginImpl();
 		Users user = new Users();
 		user.setUserId(Integer.valueOf(userId));
-		user = impl.getUser(user);
+		user = impl.getUserById(user);
+		return Response.ok().entity(user).build();
+	}
+	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getUser/")
+	public Response getUser(Users user) {
+		LoginImpl impl = new LoginImpl();
+		user = impl.getUserByName(user);
 		return Response.ok().entity(user).build();
 	}
 	

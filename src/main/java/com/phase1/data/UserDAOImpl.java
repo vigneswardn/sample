@@ -1,8 +1,11 @@
 package com.phase1.data;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import com.phase1.api.dto.Users;
 
@@ -34,11 +37,20 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public Users read(Users user) {
+	public Users readById(Users user) {
 		EntityManager em = factory.createEntityManager();
-		em.getTransaction().begin();
-		Users userObj = em.find(Users.class, user.getUserId());
-		em.getTransaction().commit();
+		user = em.find(Users.class, user.getUserId());
+		em.close();
+		return user;
+	}
+
+	@Override
+	public Users readByName(Users user) {
+		EntityManager em = factory.createEntityManager();
+		Query query = em.createNativeQuery("select userId from Users a where userName=:uName and password=:pwd",Users.class);
+		query.setParameter("uName", user.getUserName());
+		query.setParameter("pwd",user.getPassword());
+		Users userObj = (Users) query.getSingleResult();
 		em.close();
 		return userObj;
 	}

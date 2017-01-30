@@ -44,68 +44,118 @@ public class BlogDAOTest {
 	@BeforeClass
 	public static void init() {
 		factory = Persistence.createEntityManagerFactory("blogger");
-		//Add User:
-	//	EntityManager em = factory.createEntityManager();
-	//	em.getTransaction().begin();
+		
+	}
+	
+	private static Users createUser() {
 		Users user = new Users();
-		user.setUserName("vigneswardn4");
+		user.setUserName("vigneswardn3");
 		user.setPassword("vigneswardn");
 		user.setFirstName("vigneswar");
 		user.setLastName("lastname");
 		user.setEmail("abc@gmail.com");
 		user.setPhone("13132311");
-	//	em.persist(user);
-	//	em.getTransaction().commit();
-	//	System.out.println("Printing user before blog entry: "+user);
-		
-		List<Users> users = new ArrayList<Users>();
-		users.add(user);
-		
-		//Add Blog for a user
-		//EntityManager em = factory.createEntityManager();
-	//	em.getTransaction().begin();
-		String[] tags = {"sample","tech"};
-		Blog blog = new Blog("My First Blog","adasdgasdga",new Date(),new Date(),"vnagarat",false,tags);
-	//	em.persist(blog); // persist blog
-		List<Blog> blogs = new ArrayList<Blog>();
-		blogs.add(blog);
-		
-		user.setBlogs(blogs);
-		blog.setUsers(users);
-		
-	//	em.getTransaction().commit();
-		
-	//	System.out.println("Printing blog entry: "+blog);
+		return user;
+	}
 	
-	//	em.getTransaction().begin();
+	private static Blog createBlog() {
+		Blog blog = new Blog();
+		blog.setTitle("Title");
+		blog.setContent("wasdgasg");
+		return blog;
+	}
 	
-	//	user.setBlogs(blogs);
-	//	em.persist(user); // update same user with blog info
-	//	em.getTransaction().commit();
-		//System.out.println("Printing user after blog entry: "+user);
-		EntityManager em = factory.createEntityManager();
+	@Test
+	public void testCreateBlogs() {
+		em = factory.createEntityManager();
+		Users user = createUser();
+		Blog blog = createBlog();
+		
+		em.getTransaction().begin();
+		em.persist(blog);
+		em.getTransaction().commit();
+		
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit();
+
+		em.getTransaction().begin();
+		Users user1 = em.find(Users.class, 1);
+		user1.getBlogs().add(blog);
+		em.merge(user1);
+		em.getTransaction().commit();
 		em.close();
-		System.out.println("Printing user: "+user);
-		System.out.println("Printing blog: "+blog);
+		assertTrue(true);	
 	}
 	
-
+	
 	@Test
-	public void testTotalBlogs() {
-		Query query = em.createNativeQuery("select * from Blog a ", Blog.class);
-		List<Blog> blogs = (List<Blog>) query.getResultList();
-		//Blog blog = (Blog) blogs.get(0);
-		//System.out.println(blog);
-		//System.out.println(blogs.size() );
-		Query query1 = em.createNativeQuery("select * from Users a ", Users.class);
-		List<Users> users = (List<Users>) query1.getResultList();
-		for(Users user:users) {
-		//	System.out.println(user);
-		}
+	public void testUpdateBlogs() {
+		em = factory.createEntityManager();
+		
+		//create blog first
+		Blog blog = createBlog();
+		em.getTransaction().begin();
+		em.persist(blog);
+		em.getTransaction().commit();
+		
+		blog = em.find(Blog.class, 1);
+		blog.setCreatedBy("user");
+
+		em.getTransaction().begin();
+		em.merge(blog);
+		em.getTransaction().commit();
+		em.close();
 		assertTrue(true);	
+	}
+	
+	@Test
+	public void testGetBlogs() {
+		em = factory.createEntityManager();
+		//create user first
+		Users user = createUser();
+		em.getTransaction().begin();
+		em.persist(user);
+		em.getTransaction().commit();
+		
+		user = em.find(Users.class, 1);
+		List<Blog> blogs = user.getBlogs();
+		System.out.println(blogs);
+		em.close();
+		assertTrue(true);
+		
+	}
+	
+	@Test
+	public void testAddMultipleBlogs() {
+		em = factory.createEntityManager();
+		//create user first
+		Users user = createUser();
+		em.getTransaction().begin();
+		em.persist(user);
+		em.getTransaction().commit();
+
+		//create blog 1
+		Blog blog1 = createBlog();
+		em.getTransaction().begin();
+		em.persist(blog1);
+		em.getTransaction().commit();
+
+		//create blog 2
+		Blog blog2 = createBlog();
+		em.getTransaction().begin();
+		em.persist(blog2);
+		em.getTransaction().commit();
+
+		em.getTransaction().begin();
+		user = em.find(Users.class, 1);
+		user.getBlogs().add(blog1);
+		user.getBlogs().add(blog2);
+		em.merge(user);
+		em.getTransaction().commit();
+		em.close();
+		assertTrue(true);
+
 	}
 	
 }

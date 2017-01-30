@@ -12,10 +12,16 @@ public class LoginImpl implements Login {
 	public LoginImpl() {
 		userDAO = new UserDAOImpl();
 	}
+	
+	@Override
+	public Users getUserByName(Users user) {
+		user = userDAO.readByName(user);
+		return user;
+	}
 
 	@Override
-	public Users getUser(Users user) {
-		user = userDAO.read(user);
+	public Users getUserById(Users user) {
+		user = userDAO.readById(user);
 		return user;
 	}
 
