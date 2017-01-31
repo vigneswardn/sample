@@ -33,7 +33,7 @@ public class ChatController {
 			throw new ChatException("Please provide chat details");
 		}
 		ChatImpl impl = new ChatImpl();
-		impl.addChatMessages(chatMsg);
-		return Response.ok().build();
+		List<Chat> chats = impl.addChatMessages(chatMsg);
+		return Response.ok().entity(chats).build();
 	}
 }

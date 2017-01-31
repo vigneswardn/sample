@@ -17,18 +17,21 @@ public class LoginImpl implements Login {
 	
 	@Override
 	public Users getUserByName(Users user) {
-		user = userDAO.readByName(user);
-		if(user == null) {
-			throw new InvalidUserNameException("Invalid user name");
+		try {
+			user = userDAO.readByName(user);	
+		} catch(Exception nre) {
+			throw new InvalidUserNameException(nre.getMessage());
 		}
+		
 		return user;
 	}
 
 	@Override
 	public Users getUserById(Users user) {
-		user = userDAO.readById(user);
-		if(user == null) {
-			throw new UserNotFoundException();
+		try {
+			user = userDAO.readById(user);
+		} catch(Exception nre) {
+			throw new UserNotFoundException(nre.getMessage());
 		}
 		return user;
 	}
