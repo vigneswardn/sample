@@ -37,7 +37,7 @@ public class UserController {
 		return Response.ok().entity(user).build();
 	}
 	
-	@PUT
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/addUser/")
@@ -47,7 +47,7 @@ public class UserController {
 		return Response.ok().entity(user).build();
 	}
 	
-	@POST
+	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/updateUser/")

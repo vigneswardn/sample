@@ -1,9 +1,12 @@
 package com.phase1.api.dto;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 @Entity
 @XmlRootElement
@@ -36,13 +42,11 @@ public class Users {
 		this.phone = phone;
 	}
 
-	public Users(int userId, List<Blog> blogs) {
+	public Users(int userId, Set<Blog> blogs) {
 		super();
 		this.userId = userId;
 		this.blogs = blogs;
 	}
-
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,13 +59,10 @@ public class Users {
 	private String email;
 	private String phone;
 	
-	//@ManyToMany(mappedBy="users",targetEntity=Blog.class,cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	
 	@JoinTable(name="users_blogs",joinColumns={@JoinColumn(name="userId")},inverseJoinColumns={@JoinColumn(name = "blogId")})
-	@ManyToMany
-	List<Blog> blogs;
-	
-
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JsonBackReference
+	Set<Blog> blogs;
 	
 	public Integer getUserId() {
 		return userId;
@@ -119,22 +120,28 @@ public class Users {
 		this.phone = phone;
 	}
 
-	public List<Blog> getBlogs() {
+	public void setBlogs(Set<Blog> blogs) {
+		this.blogs = blogs;
+	}
+
+	public Set<Blog> getBlogs() {
 		if(blogs == null) {
-			blogs = new ArrayList<Blog>();
+			blogs = new HashSet<Blog>();
 		}
 		return blogs;
 	}
 
-	public void setBlogs(List<Blog> blogs) {
-		this.blogs = blogs;
-	}
 
 	@Override
     public String toString() {
 		StringBuilder strBuilder = new StringBuilder();
-		strBuilder.append("User ID: "+this.userId+" ");
-		strBuilder.append("User Name : " +this.userName);
+		strBuilder.append(" User ID: "+this.userId+" ");
+		strBuilder.append(" User Name : " +this.userName);
+		strBuilder.append(" User email : " +this.email);
+		strBuilder.append(" User phone : " +this.phone);
+		strBuilder.append(" User password : " +this.password);
+		strBuilder.append(" User blog : "+this.blogs);
+		
 		return strBuilder.toString();
 	}
 

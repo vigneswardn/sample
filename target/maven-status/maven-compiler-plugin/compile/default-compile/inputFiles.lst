@@ -1,6 +1,7 @@
 /Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/api/bizInterface/Register.java
 /Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/api/bizInterface/Blogger.java
 /Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/biz/RegisterImpl.java
+/Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/api/dto/BlogProjection.java
 /Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/api/exception/InvalidPhoneNumberException.java
 /Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/biz/LoginImpl.java
 /Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/data/UserDAOImpl.java

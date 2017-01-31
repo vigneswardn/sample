@@ -8,5 +8,5 @@ public interface ChatMessage {
 
 	public List<Chat> getChatMessages();
 	
-	public void addChatMessages(Chat chatMsg);
+	public List<Chat> addChatMessages(Chat chatMsg);
 }

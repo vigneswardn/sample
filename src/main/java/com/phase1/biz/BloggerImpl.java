@@ -1,7 +1,10 @@
 package com.phase1.biz;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import com.phase1.api.bizInterface.Blogger;
 import com.phase1.api.dto.Blog;
@@ -31,13 +34,15 @@ public class BloggerImpl implements Blogger {
 		blog.setModifiedDate(null);
 		blogDAO.create(blog);
 		// get User ID from UI
-		Users user = blog.getUsers().get(0); 
-		// get complete user details
-		user = userDAO.readById(user);
-		user.getBlogs().add(blog);
-		// update user with blog info
-		userDAO.update(user);
-		
+		Set<Users> usersSet = blog.getUsers();
+		for(Users user: usersSet) {
+			//Users user = blog.getUsers().get(0); 
+			// get complete user details
+			user = userDAO.readById(user);
+			user.getBlogs().add(blog);
+			// update user with blog info
+			userDAO.update(user);
+		}
 	}
 
 	@Override
@@ -54,19 +59,22 @@ public class BloggerImpl implements Blogger {
 
 	@Override
 	public void addComments(Blog blog) {
-		Comments comments = blog.getComments().get(0);
-		// add Comment
-		blogDAO.create(comments);
+		
+		Set<Comments> comments = blog.getComments();
+		
+		for(Comments comment: comments) {
+			// add Comment
+			blogDAO.create(comment);
+		}
 		// map comment to blog table
 		Blog existingBlog = blogDAO.read(blog);
-		existingBlog.getComments().add(comments);
+		existingBlog.getComments().addAll(comments);
 		blogDAO.update(existingBlog);
-		
 	}
 
 	@Override
-	public List<Comments> getComments(Blog blog) {
-		List<Comments> comments = blogDAO.readComments(blog);
+	public Set<Comments> getComments(Blog blog) {
+		Set<Comments> comments = blogDAO.readComments(blog);
 		return comments;
 	}
 
@@ -74,14 +82,14 @@ public class BloggerImpl implements Blogger {
 	public String inviteUsers(Invites invites) {
 		Users invitedUser = null;
 		//Get Actual User details
-		String userId = invites.getUserId();
+		Integer userId = invites.getUserId();
 		Users actualUser = new Users();
-		actualUser.setUserId(Integer.valueOf(userId));
+		actualUser.setUserId(userId);
 		actualUser = userDAO.readById(actualUser);
-		List<Blog> blogs = actualUser.getBlogs();
-		
+		Set<Blog> blogs = actualUser.getBlogs();
 		for(Blog blog:blogs) {
 			for(String email: invites.getEmails()) {
+				System.out.println("EMAIL ************* : "+email);
 				invitedUser = userDAO.readyByEmail(email);
 				if(invitedUser != null) {
 					invitedUser.getBlogs().add(blog);

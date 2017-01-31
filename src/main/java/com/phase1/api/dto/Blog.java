@@ -2,16 +2,24 @@ package com.phase1.api.dto;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @XmlRootElement
@@ -37,19 +45,22 @@ public class Blog {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer blogId;
 	
-	@ManyToMany(mappedBy="blogs")
-	private List<Users> users;
+	@ManyToMany(mappedBy="blogs",fetch=FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+//	@JsonManagedReference ---
+	private Set<Users> users;
 	
 	private String title;
 	private String content;
 	private Date createDate;
 	private Date modifiedDate;
 	private String createdBy;
-	boolean isFavourite;
+	private boolean isFavourite;
 	private String[] tags;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Comments> comments = new ArrayList<Comments>();
+	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	//@Fetch(value = FetchMode.SUBSELECT)
+	private Set<Comments> comments = new HashSet<Comments>();
 	
 	public Integer getBlogId() {
 		return blogId;
@@ -59,11 +70,11 @@ public class Blog {
 		this.blogId = blogId;
 	}
 
-	public List<Users> getUsers() {
+	public Set<Users> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<Users> users) {
+	public void setUsers(Set<Users> users) {
 		this.users = users;
 	}
 
@@ -111,7 +122,7 @@ public class Blog {
 		return isFavourite;
 	}
 
-	public void setFavourite(boolean isFavourite) {
+	public void setIsFavourite(boolean isFavourite) {
 		this.isFavourite = isFavourite;
 	}
 
@@ -123,14 +134,14 @@ public class Blog {
 		this.tags = tags;
 	}
 
-	public List<Comments> getComments() {
+	public Set<Comments> getComments() {
 		if(comments == null) {
-			comments = new ArrayList<Comments>();
+			comments = new HashSet<Comments>();
 		}
 		return comments;
 	}
 
-	public void setComments(List<Comments> comments) {
+	public void setComments(Set<Comments> comments) {
 		this.comments = comments;
 	}
 

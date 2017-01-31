@@ -28,22 +28,24 @@ public class UserDAOImpl implements UserDAO {
 	public Users update(Users user) {
 		EntityManager em = factory.createEntityManager();
 		Users existingUser = em.find(Users.class,user.getUserId());
-		if(user.getEmail() == null) {
+		System.out.println("Updating user details : "+user);
+		System.out.println("Existing user details : "+existingUser);
+		if(user.getEmail() != null) {
 			existingUser.setEmail(user.getEmail());
 		}
-		if(user.getFirstName() == null) {
+		if(user.getFirstName() != null) {
 			existingUser.setFirstName(user.getFirstName());
 		}
-		if(user.getLastName() == null) {
+		if(user.getLastName() != null) {
 			existingUser.setLastName(user.getLastName());
 		}
-		if(user.getPassword() == null) {
+		if(user.getPassword() != null) {
 			existingUser.setPassword(user.getPassword());
 		}
-		if(user.getPhone() == null) {
+		if(user.getPhone() != null) {
 			existingUser.setPhone(user.getPhone());
 		}
-		if(user.getUserName() == null) {
+		if(user.getUserName() != null) {
 			existingUser.setUserName(user.getUserName());
 		}
 		em.getTransaction().begin();
@@ -64,7 +66,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Users readByName(Users user) {
 		EntityManager em = factory.createEntityManager();
-		Query query = em.createNativeQuery("select userId from Users a where userName=:uName and password=:pwd",Users.class);
+		Query query = em.createNativeQuery("select * from Users a where userName=:uName and password=:pwd",Users.class);
 		query.setParameter("uName", user.getUserName());
 		query.setParameter("pwd",user.getPassword());
 		Users userObj = (Users) query.getSingleResult();
@@ -75,8 +77,10 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Users readyByEmail(String email) {
 		EntityManager em = factory.createEntityManager();
-		Users user = em.find(Users.class, email);
-		return user;
+		Query query = em.createNativeQuery("select * from Users where email=:emailId",Users.class);
+		query.setParameter("emailId", email);
+		Users userObj = (Users) query.getSingleResult();
+		return userObj;
 	}
 
 

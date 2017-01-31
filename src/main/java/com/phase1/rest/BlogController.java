@@ -1,6 +1,7 @@
 package com.phase1.rest;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -11,6 +12,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 import com.phase1.api.dto.Blog;
 import com.phase1.api.dto.Comments;
@@ -28,11 +32,11 @@ public class BlogController {
 		BloggerImpl impl = new BloggerImpl();
 		Blog blog = new Blog();
 		blog.setBlogId(Integer.valueOf(blogId));
-		impl.getBlog(blog);
+		blog = impl.getBlog(blog);
 		return Response.ok().entity(blog).build();
 	}
 	
-	@POST
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/searchBlog/{searchContent}")
 	public Response searchBlog(@PathParam("searchContent")String searchContent) {
@@ -41,7 +45,7 @@ public class BlogController {
 		return Response.ok().entity(blogs).build();
 	}
 	
-	@PUT
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/addBlog/")
@@ -51,7 +55,7 @@ public class BlogController {
 		return Response.ok().entity(blog).build();
 	}
 	
-	@PUT
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/addComments/")
@@ -64,28 +68,33 @@ public class BlogController {
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/getComments/")
-	public Response getComments(Blog blog) {
+	@Path("/getComments/{blogId}")
+	public Response getComments(@PathParam("blogId")Integer blogId) {
 		BloggerImpl impl = new BloggerImpl();
-		List<Comments> comments = (List<Comments>) impl.getComments(blog);
+		Blog blog = new Blog();
+		blog.setBlogId(blogId);
+		Set<Comments> comments = (Set<Comments>) impl.getComments(blog);
 		return Response.ok().entity(comments).build();
 	}
 	
-	@POST
+	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/inviteUsers/")
 	public Response updateUser(Invites invites) {
 		BloggerImpl impl = new BloggerImpl();
 		String message = impl.inviteUsers(invites);
-		return Response.ok().entity(message).build();
+		return Response.ok().build();
 	}
 	
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/getFavourites/")
-	public Response getFavourites(Users user) {
+	@Path("/getFavourites/{userId}")
+	public Response getFavourites(@PathParam("userId")String userId) {
+		Users user = new Users();
+		System.out.println("user id **** : "+userId);
+		user.setUserId(Integer.valueOf(userId));
 		BloggerImpl impl = new BloggerImpl();
 		List<Blog> blogs = (List<Blog>) impl.getAllFavourites(user);
 		return Response.ok().entity(blogs).build();

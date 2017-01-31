@@ -1,6 +1,7 @@
 package com.phase1.api.bizInterface;
 
 import java.util.List;
+import java.util.Set;
 
 import com.phase1.api.dto.Blog;
 import com.phase1.api.dto.Comments;
@@ -17,7 +18,7 @@ public interface Blogger {
 	
 	public void addComments(Blog blog);
 	
-	public List<Comments> getComments(Blog blog);
+	public Set<Comments> getComments(Blog blog);
 	
 	public String inviteUsers(Invites invites);
 	

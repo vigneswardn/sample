@@ -22,8 +22,9 @@ public class ChatImpl implements ChatMessage {
 	}
 
 	@Override
-	public void addChatMessages(Chat chatMsg) {
+	public List<Chat> addChatMessages(Chat chatMsg) {
 		chatDAO.create(chatMsg);
+		return getChatMessages();
 	}
 
 }

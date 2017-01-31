@@ -8,7 +8,7 @@ public class Invites {
 		super();
 	}
 	
-	private String userId;
+	private Integer userId;
 	
 	private List<String> emails;
 
@@ -20,11 +20,11 @@ public class Invites {
 		this.emails = emails;
 	}
 
-	public String getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 	
