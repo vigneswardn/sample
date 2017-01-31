@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.phase1.api.dto.Chat;
+import com.phase1.api.exception.ChatException;
 import com.phase1.biz.ChatImpl;
 
 @Path("/chat")
@@ -28,6 +29,9 @@ public class ChatController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/addChat/")
 	public Response addChat(Chat chatMsg) {
+		if(chatMsg == null || chatMsg.getMessage() == null) {
+			throw new ChatException("Please provide chat details");
+		}
 		ChatImpl impl = new ChatImpl();
 		impl.addChatMessages(chatMsg);
 		return Response.ok().build();

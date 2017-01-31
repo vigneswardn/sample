@@ -1,22 +1,24 @@
 package com.phase1.test;
 
-import java.util.ArrayList;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
 
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.phase1.api.dto.Blog;
+import com.phase1.api.dto.Comments;
 import com.phase1.api.dto.Users;
 
 public class BlogDAOTest {
@@ -66,7 +68,7 @@ public class BlogDAOTest {
 		return blog;
 	}
 	
-/*	@Test
+	@Test
 	public void testCreateBlogs() {
 		System.out.println("testCreateBlogs - start");
 		em = factory.createEntityManager();
@@ -135,13 +137,13 @@ public class BlogDAOTest {
 		em.getTransaction().commit();
 		
 		Users user2 = em.find(Users.class, 1);
-		List<Blog> blogs = user2.getBlogs();
+		Set<Blog> blogs = user2.getBlogs();
 		System.out.println("***********************");
 		System.out.println(blogs);
 		System.out.println("***********************");
 		em.close();
 		System.out.println("testGetBlogs - end");
-		assertTrue(blogs!=null);
+		assertTrue(blogs != null);
 		
 	}
 	
@@ -199,7 +201,7 @@ public class BlogDAOTest {
 		em.persist(blog1);
 		em.getTransaction().commit();
 
-		Users user1 = blog1.getUsers().get(0);
+		/*Users user1 = blog1.getUsers().get(0);
 		em.getTransaction().begin();
 		user1.getBlogs().add(blog1);
 		em.merge(user1);
@@ -215,7 +217,7 @@ public class BlogDAOTest {
 		user.getBlogs().add(blog1);
 		user.getBlogs().add(blog2);
 		em.merge(user);
-		em.getTransaction().commit();
+		em.getTransaction().commit();*/
 		em.close();
 		System.out.println("testAddUserViaBlog - end");
 		assertTrue(user!=null);
@@ -252,7 +254,7 @@ public class BlogDAOTest {
 		
 		em.getTransaction().begin();
 		Comments comment1 = em.find(Comments.class, 1);
-		List<Comments> comments1 = new ArrayList<Comments>();
+		Set<Comments> comments1 = new HashSet<Comments>();
 		comments1.add(comment1);
 		Blog blog1 = em.find(Blog.class, 1);
 		blog1.setComments(comments1);
@@ -262,19 +264,18 @@ public class BlogDAOTest {
 		em.getTransaction().begin();
 		Users user10 = em.find(Users.class, 1);
 		System.out.println(user10);
-		List<Blog> blogs10 = user10.getBlogs();
-		System.out.println(blogs10.get(0));
-		List<Comments> comments10 = blogs10.get(0).getComments();
+		//Set<Blog> blogs10 = user10.getBlogs();
+		/*List<Comments> comments10 = blogs10.get(0).getComments();
 		if(comments10.size() > 0){
 			System.out.println(comments10.get(0));
-		}
+		}*/
 		em.close();
 		System.out.println("testAddComments - end");
 		assertTrue(user1!=null);
 		
-	}*/
+	}
 
-	/*@Test
+	@Test
 	public void testGetAllFavourites() {
 		em = factory.createEntityManager();
 		
@@ -285,8 +286,9 @@ public class BlogDAOTest {
 		
 		em.close();
 		
-	}*/
-	/*@Test
+	}
+	
+	@Test
 	public void testSearchBlog() {
 		em = factory.createEntityManager();
 		
@@ -297,16 +299,6 @@ public class BlogDAOTest {
 		
 		em.close();
 		
-	}*/
-	
-	@Test
-	public void testSearchBlog() {
-		em = factory.createEntityManager();
-		Blog blogObj = em.find(Blog.class, 1);
-		System.out.println(blogObj);
-		em.close();
-		
 	}
-	
 	
 }

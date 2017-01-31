@@ -29,7 +29,7 @@ public class UserDAOTest {
 	
 	private static Users createUser() {
 		Users user = new Users();
-		user.setUserName("vigneswardn3");
+		user.setUserName("vigneswardn24142");
 		user.setPassword("vigneswardn");
 		user.setFirstName("vigneswar");
 		user.setLastName("lastname");
@@ -50,7 +50,7 @@ public class UserDAOTest {
 		System.out.println("testAddNewUsers - end");
 		assertTrue(user!=null);	
 	}
-	
+	/*
 	@Test
 	public void testUpdateUsers() {
 		System.out.println("testUpdateUsers - start");
@@ -85,6 +85,6 @@ public class UserDAOTest {
 		em.close();
 		System.out.println("testGetUsers - end");
 		assertTrue(user1!=null);	
-	}
+	}*/
 	
 }

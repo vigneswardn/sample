@@ -1,8 +1,6 @@
 package com.phase1.biz;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -89,7 +87,6 @@ public class BloggerImpl implements Blogger {
 		Set<Blog> blogs = actualUser.getBlogs();
 		for(Blog blog:blogs) {
 			for(String email: invites.getEmails()) {
-				System.out.println("EMAIL ************* : "+email);
 				invitedUser = userDAO.readyByEmail(email);
 				if(invitedUser != null) {
 					invitedUser.getBlogs().add(blog);

@@ -1,9 +1,7 @@
 package com.phase1.api.dto;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,8 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -47,7 +43,6 @@ public class Blog {
 	
 	@ManyToMany(mappedBy="blogs",fetch=FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
-//	@JsonManagedReference ---
 	private Set<Users> users;
 	
 	private String title;

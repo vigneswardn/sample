@@ -28,8 +28,6 @@ public class UserDAOImpl implements UserDAO {
 	public Users update(Users user) {
 		EntityManager em = factory.createEntityManager();
 		Users existingUser = em.find(Users.class,user.getUserId());
-		System.out.println("Updating user details : "+user);
-		System.out.println("Existing user details : "+existingUser);
 		if(user.getEmail() != null) {
 			existingUser.setEmail(user.getEmail());
 		}
