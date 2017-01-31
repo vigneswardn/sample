@@ -14,6 +14,8 @@ import javax.ws.rs.core.Response;
 
 import com.phase1.api.dto.Blog;
 import com.phase1.api.dto.Comments;
+import com.phase1.api.dto.Invites;
+import com.phase1.api.dto.Users;
 import com.phase1.biz.BloggerImpl;
 
 @Path("/blog")
@@ -72,5 +74,23 @@ public class BlogController {
 		return Response.ok().entity(comments).build();
 	}
 	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/inviteUsers/")
+	public Response updateUser(Invites invites) {
+		BloggerImpl impl = new BloggerImpl();
+		String message = impl.inviteUsers(invites);
+		return Response.ok().entity(message).build();
+	}
 	
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getFavourites/")
+	public Response getFavourites(Users user) {
+		BloggerImpl impl = new BloggerImpl();
+		List<Blog> blogs = (List<Blog>) impl.getAllFavourites(user);
+		return Response.ok().entity(blogs).build();
+	}
 }

@@ -1,13 +1,16 @@
 package com.phase1.data;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import com.phase1.api.dto.Blog;
 import com.phase1.api.dto.Comments;
+import com.phase1.api.dto.Users;
 
 public class BlogDAOImpl implements BlogDAO {
 
@@ -57,10 +60,44 @@ public class BlogDAOImpl implements BlogDAO {
 	@Override
 	public void update(Blog blog) {
 		EntityManager em = factory.createEntityManager();
+		Blog existingBlog = em.find(Blog.class,blog.getBlogId());
+		if(blog.getComments() != null) {
+			for(Comments comment: blog.getComments() ) {
+				existingBlog.getComments().add(comment);	
+			}
+		}
+		if(blog.getContent() != null) {
+			existingBlog.setContent(blog.getContent());
+		}
+		if(blog.getModifiedDate() != null) {
+			existingBlog.setModifiedDate(blog.getModifiedDate());
+		} else {
+			existingBlog.setModifiedDate(new Date());
+		}
+		if(blog.getTags() != null) {
+			existingBlog.setTags(blog.getTags());
+		}
+		if(blog.getTitle() != null) {
+			existingBlog.setTitle(blog.getTitle());
+		}
+		if(blog.getUsers() != null) {
+			existingBlog.setUsers(blog.getUsers());
+		}
+		
 		em.getTransaction().begin();
-		em.merge(blog);
+		em.merge(existingBlog);
 		em.getTransaction().commit();
 		em.close();
+	}
+
+	@Override
+	public List<Blog> readAllFavourites(Users user) {
+		EntityManager em = factory.createEntityManager();
+		Query query = em.createNativeQuery("select * from Blog a, Users b, users_blogs ab where a.isFavourite=true and b.userId=:userID1 and ab.userId=:userID2 and ab.blogId=a.blogId order ",Users.class);
+		query.setParameter("userID1", user.getUserId());
+		query.setParameter("userID2", user.getUserId());
+		List<Blog> blogs = (List<Blog>)query.getResultList();
+		return blogs;
 	}
 
 }

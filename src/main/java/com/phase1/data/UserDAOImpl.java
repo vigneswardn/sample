@@ -1,7 +1,5 @@
 package com.phase1.data;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -31,28 +29,28 @@ public class UserDAOImpl implements UserDAO {
 		EntityManager em = factory.createEntityManager();
 		Users existingUser = em.find(Users.class,user.getUserId());
 		if(user.getEmail() == null) {
-			user.setEmail(existingUser.getEmail());
+			existingUser.setEmail(user.getEmail());
 		}
 		if(user.getFirstName() == null) {
-			user.setFirstName(existingUser.getFirstName());
+			existingUser.setFirstName(user.getFirstName());
 		}
 		if(user.getLastName() == null) {
-			user.setLastName(existingUser.getLastName());
+			existingUser.setLastName(user.getLastName());
 		}
 		if(user.getPassword() == null) {
-			user.setPassword(existingUser.getPassword());
+			existingUser.setPassword(user.getPassword());
 		}
 		if(user.getPhone() == null) {
-			user.setPhone(existingUser.getPhone());
+			existingUser.setPhone(user.getPhone());
 		}
 		if(user.getUserName() == null) {
-			user.setUserName(existingUser.getUserName());
+			existingUser.setUserName(user.getUserName());
 		}
 		em.getTransaction().begin();
-		user = em.merge(user);
+		existingUser = em.merge(existingUser);
 		em.getTransaction().commit();
 		em.close();
-		return user;
+		return existingUser;
 	}
 
 	@Override
@@ -72,6 +70,13 @@ public class UserDAOImpl implements UserDAO {
 		Users userObj = (Users) query.getSingleResult();
 		em.close();
 		return userObj;
+	}
+
+	@Override
+	public Users readyByEmail(String email) {
+		EntityManager em = factory.createEntityManager();
+		Users user = em.find(Users.class, email);
+		return user;
 	}
 
 

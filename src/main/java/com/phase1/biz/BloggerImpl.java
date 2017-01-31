@@ -6,6 +6,7 @@ import java.util.List;
 import com.phase1.api.bizInterface.Blogger;
 import com.phase1.api.dto.Blog;
 import com.phase1.api.dto.Comments;
+import com.phase1.api.dto.Invites;
 import com.phase1.api.dto.Users;
 import com.phase1.data.BlogDAO;
 import com.phase1.data.BlogDAOImpl;
@@ -67,6 +68,35 @@ public class BloggerImpl implements Blogger {
 	public List<Comments> getComments(Blog blog) {
 		List<Comments> comments = blogDAO.readComments(blog);
 		return comments;
+	}
+
+	@Override
+	public String inviteUsers(Invites invites) {
+		Users invitedUser = null;
+		//Get Actual User details
+		String userId = invites.getUserId();
+		Users actualUser = new Users();
+		actualUser.setUserId(Integer.valueOf(userId));
+		actualUser = userDAO.readById(actualUser);
+		List<Blog> blogs = actualUser.getBlogs();
+		
+		for(Blog blog:blogs) {
+			for(String email: invites.getEmails()) {
+				invitedUser = userDAO.readyByEmail(email);
+				if(invitedUser != null) {
+					invitedUser.getBlogs().add(blog);
+					userDAO.update(invitedUser);
+				}
+			}
+		}
+		
+		return "success";
+	}
+
+	@Override
+	public List<Blog> getAllFavourites(Users user) {
+		List<Blog> blogs = blogDAO.readAllFavourites(user);
+		return blogs;
 	}
 
 }

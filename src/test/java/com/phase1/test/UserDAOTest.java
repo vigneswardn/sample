@@ -40,19 +40,20 @@ public class UserDAOTest {
 
 	@Test
 	public void testAddNewUsers() {
+		System.out.println("testAddNewUsers - start");
 		em = factory.createEntityManager();
 		Users user = createUser();
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit();
-		
-//		List<Users> users = (List<Users>) em.createNativeQuery("select * from Users a",Users.class).getResultList();
 		em.close();
-		assertTrue(1==1);	
+		System.out.println("testAddNewUsers - end");
+		assertTrue(user!=null);	
 	}
 	
 	@Test
 	public void testUpdateUsers() {
+		System.out.println("testUpdateUsers - start");
 		em = factory.createEntityManager();
 
 		//create user first
@@ -67,17 +68,23 @@ public class UserDAOTest {
 		em.merge(user);
 		em.getTransaction().commit();
 
-		//		List<Users> users = (List<Users>) em.createNativeQuery("select * from Users a",Users.class).getResultList();
 		em.close();
-		assertTrue(1==1);	
+		System.out.println("testUpdateUsers - end");
+		assertTrue(user!=null);	
 	}
 	
 	@Test
 	public void testGetUsers() {
+		System.out.println("testGetUsers - start");
 		em = factory.createEntityManager();
-		Users user = em.find(Users.class, 1);
+		Users	user = createUser();
+		em.getTransaction().begin();
+		em.persist(user);
+		em.getTransaction().commit();
+		Users user1 = em.find(Users.class, 1);
 		em.close();
-		assertTrue(1==1);	
+		System.out.println("testGetUsers - end");
+		assertTrue(user1!=null);	
 	}
 	
 }

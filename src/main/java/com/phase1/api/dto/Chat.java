@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Chat {
 
 	public Chat() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,13 +25,13 @@ public class Chat {
 	
 	private Date createdDate;
 
-/*	public int getChatId() {
+	public int getChatId() {
 		return chatId;
 	}
 
 	public void setChatId(int chatId) {
 		this.chatId = chatId;
-	}*/
+	}
 
 	public String getMessage() {
 		return message;

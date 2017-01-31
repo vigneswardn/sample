@@ -11,14 +11,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import org.apache.derby.tools.sysinfo;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.phase1.api.dto.Chat;
-import com.phase1.api.dto.Users;
-
-import junit.framework.Assert;
 
 public class ChatDAOTest {
 
@@ -37,6 +33,7 @@ public class ChatDAOTest {
 
 	@Test
 	public void testAddChats() {
+		System.out.println("testAddChats - start");
 		em = factory.createEntityManager();
 		Chat chat1 = new Chat();
 		chat1.setCreatedBy("vnagarat");
@@ -69,7 +66,7 @@ public class ChatDAOTest {
 		List<Chat> chats = (List<Chat>) query.getResultList();
 		System.out.println(chats);
 		em.close();
-		
+		System.out.println("testAddChats - end");
 		assertTrue(chats!=null);	
 	}
 	

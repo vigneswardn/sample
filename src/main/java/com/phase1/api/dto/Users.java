@@ -3,9 +3,7 @@ package com.phase1.api.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +12,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -24,7 +21,7 @@ public class Users {
 	
 
 	public Users() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 	
 	public Users(int userId, String userName, String firstName, String lastName, String password, String email,

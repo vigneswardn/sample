@@ -20,6 +20,7 @@
 /Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/api/exception/UserNotFoundException.java
 /Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/data/ChatDAOImpl.java
 /Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/api/exception/InvalidPasswordException.java
+/Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/api/dto/Invites.java
 /Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/api/dto/Comments.java
 /Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/data/BlogDAO.java
 /Users/vnagarat/cmad_vnagarat/git-repo/phase1/src/main/java/com/phase1/biz/ChatImpl.java

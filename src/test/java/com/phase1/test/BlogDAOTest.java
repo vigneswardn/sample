@@ -27,6 +27,7 @@ public class BlogDAOTest {
 	}
 	static EntityManagerFactory factory;
 	EntityManager em;
+	static int i=0;
 	
 	@Before
 	public void before() {
@@ -50,24 +51,25 @@ public class BlogDAOTest {
 	
 	private static Users createUser() {
 		Users user = new Users();
-		user.setUserName("vigneswardn3");
-		user.setPassword("vigneswardn");
-		user.setFirstName("vigneswar");
-		user.setLastName("lastname");
+		user.setUserName("vigneswardn"+i++);
+		user.setPassword("vigneswardn"+i++);
+		user.setFirstName("vigneswar"+i++);
+		user.setLastName("lastname"+i++);
 		user.setEmail("abc@gmail.com");
-		user.setPhone("13132311");
+		user.setPhone("13132311"+i++);
 		return user;
 	}
 	
 	private static Blog createBlog() {
 		Blog blog = new Blog();
-		blog.setTitle("Title");
-		blog.setContent("wasdgasg");
+		blog.setTitle("Title"+i++);
+		blog.setContent("wasdgasg"+i++);
 		return blog;
 	}
 	
-	/*@Test
+	@Test
 	public void testCreateBlogs() {
+		System.out.println("testCreateBlogs - start");
 		em = factory.createEntityManager();
 		Users user = createUser();
 		Blog blog = createBlog();
@@ -86,12 +88,14 @@ public class BlogDAOTest {
 		em.merge(user1);
 		em.getTransaction().commit();
 		em.close();
-		assertTrue(true);	
-	}*/
+		System.out.println("testCreateBlogs - end");
+		assertTrue(user1 !=null);	
+	}
 	
 	
-	/*@Test
+	@Test
 	public void testUpdateBlogs() {
+		System.out.println("testUpdateBlogs - start");
 		em = factory.createEntityManager();
 		
 		//create blog first
@@ -107,11 +111,13 @@ public class BlogDAOTest {
 		em.merge(blog);
 		em.getTransaction().commit();
 		em.close();
-		assertTrue(true);	
-	}*/
+		System.out.println("testUpdateBlogs - end");
+		assertTrue(blog!=null);	
+	}
 	
-/*	@Test
+	@Test
 	public void testGetBlogs() {
+		System.out.println("testGetBlogs - start");
 		em = factory.createEntityManager();
 		Users user = createUser();
 		Blog blog = createBlog();
@@ -135,12 +141,14 @@ public class BlogDAOTest {
 		System.out.println(blogs);
 		System.out.println("***********************");
 		em.close();
-		assertTrue(true);
+		System.out.println("testGetBlogs - end");
+		assertTrue(blogs!=null);
 		
-	}*/
+	}
 	
-	/*@Test
+	@Test
 	public void testAddMultipleBlogs() {
+		System.out.println("testAddMultipleBlogs - start");
 		em = factory.createEntityManager();
 		//create user first
 		Users user = createUser();
@@ -167,12 +175,14 @@ public class BlogDAOTest {
 		em.merge(user);
 		em.getTransaction().commit();
 		em.close();
-		assertTrue(true);
+		System.out.println("testAddMultipleBlogs - end");
+		assertTrue(user!=null);
 
-	}*/
+	}
 	
-	/*@Test
+	@Test
 	public void testAddUserViaBlog() {
+		System.out.println("testAddUserViaBlog - start");
 		em = factory.createEntityManager();
 		//create user first
 		Users user = createUser();
@@ -182,19 +192,19 @@ public class BlogDAOTest {
 
 		//create blog 1
 		Blog blog1 = createBlog();
-		List<Users> users = new ArrayList<Users>();
-		user.setUserId(1);
-		users.add(user);
-		blog1.setUsers(users);
+		//List<Users> users = new ArrayList<Users>();
+		//user.setUserId(1);
+		//users.add(user);
+		//blog1.setUsers(users);
 		em.getTransaction().begin();
 		em.persist(blog1);
 		em.getTransaction().commit();
 
-		Users user1 = blog1.getUsers().get(0);
+		/*Users user1 = blog1.getUsers().get(0);
 		em.getTransaction().begin();
 		user1.getBlogs().add(blog1);
 		em.merge(user1);
-		em.getTransaction().commit();
+		em.getTransaction().commit();*/
 		//create blog 2
 		Blog blog2 = createBlog();
 		em.getTransaction().begin();
@@ -208,12 +218,14 @@ public class BlogDAOTest {
 		em.merge(user);
 		em.getTransaction().commit();
 		em.close();
-		assertTrue(true);
+		System.out.println("testAddUserViaBlog - end");
+		assertTrue(user!=null);
 
-	}*/
+	}
 	
 	@Test
 	public void testAddComments() {
+		System.out.println("testAddComments - start");
 		em = factory.createEntityManager();
 		Users user = createUser();
 		Blog blog = createBlog();
@@ -231,9 +243,6 @@ public class BlogDAOTest {
 		em.merge(user1);
 		em.getTransaction().commit();
 		
-		Users user2 = em.find(Users.class, 1);
-		List<Blog> blogs = user2.getBlogs();
-		
 		em.getTransaction().begin();
 		Comments comment = new Comments();
 		comment.setComment("first");
@@ -245,8 +254,9 @@ public class BlogDAOTest {
 		em.getTransaction().begin();
 		List<Comments> comments = new ArrayList<Comments>();
 		comments.add(comment);
-		blog.setComments(comments);
-		em.merge(blog);
+		Blog blog1 = em.find(Blog.class, 1);
+		blog1.setComments(comments);
+		em.merge(blog1);
 		em.getTransaction().commit();
 		
 		em.getTransaction().begin();
@@ -258,7 +268,8 @@ public class BlogDAOTest {
 		System.out.println(comments10.get(0));
 		
 		em.close();
-		assertTrue(true);
+		System.out.println("testAddComments - end");
+		assertTrue(user1!=null);
 		
 	}
 	

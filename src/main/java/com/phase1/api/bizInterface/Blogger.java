@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.phase1.api.dto.Blog;
 import com.phase1.api.dto.Comments;
+import com.phase1.api.dto.Invites;
+import com.phase1.api.dto.Users;
 
 public interface Blogger {
 
@@ -16,4 +18,8 @@ public interface Blogger {
 	public void addComments(Blog blog);
 	
 	public List<Comments> getComments(Blog blog);
+	
+	public String inviteUsers(Invites invites);
+	
+	public List<Blog> getAllFavourites(Users user);
 }

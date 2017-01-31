@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.phase1.api.dto.Blog;
 import com.phase1.api.dto.Comments;
+import com.phase1.api.dto.Users;
 
 public interface BlogDAO {
 	
@@ -16,4 +17,6 @@ public interface BlogDAO {
 	public void create(Comments comments);
 	
 	public void update(Blog blog);
+	
+	public List<Blog> readAllFavourites(Users user);
 }
