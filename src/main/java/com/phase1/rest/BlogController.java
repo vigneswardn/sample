@@ -34,13 +34,10 @@ public class BlogController {
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/getBlog/")
-	public Response getBlog() {
+	@Path("/searchBlog/{searchContent}")
+	public Response searchBlog(@PathParam("searchContent")String searchContent) {
 		BloggerImpl impl = new BloggerImpl();
-		List<Blog> blogs = impl.searchBlog("searchContent");
-		/*
-		 * pending
-		 */
+		List<Blog> blogs = impl.searchBlog(searchContent);
 		return Response.ok().entity(blogs).build();
 	}
 	

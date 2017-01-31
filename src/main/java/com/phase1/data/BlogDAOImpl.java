@@ -93,11 +93,22 @@ public class BlogDAOImpl implements BlogDAO {
 	@Override
 	public List<Blog> readAllFavourites(Users user) {
 		EntityManager em = factory.createEntityManager();
-		Query query = em.createNativeQuery("select * from Blog a, Users b, users_blogs ab where a.isFavourite=true and b.userId=:userID1 and ab.userId=:userID2 and ab.blogId=a.blogId order ",Users.class);
+		Query query = em.createNativeQuery("select * from Blog a, Users b, users_blogs ab where a.isFavourite=true and b.userId=:userID1 and ab.userId=:userID2 and ab.blogId=a.blogId order ",Blog.class);
 		query.setParameter("userID1", user.getUserId());
 		query.setParameter("userID2", user.getUserId());
 		List<Blog> blogs = (List<Blog>)query.getResultList();
 		return blogs;
+	}
+
+	@Override
+	public List<Blog> searchBlog(String searchContent) {
+		EntityManager em = factory.createEntityManager();
+		Query query = em.createNativeQuery("select * from blog where content like :searchContent1 or tags like :searchContent2",Blog.class);
+		query.setParameter("searchContent1",searchContent);
+		query.setParameter("searchContent2",searchContent);
+		List<Blog> blogs = (List<Blog>)query.getResultList();
+		return blogs;
+		
 	}
 
 }

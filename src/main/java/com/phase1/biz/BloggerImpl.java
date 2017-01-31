@@ -48,8 +48,8 @@ public class BloggerImpl implements Blogger {
 
 	@Override
 	public List<Blog> searchBlog(String searchContent) {
-		
-		return null;
+		List<Blog> blogs = blogDAO.searchBlog(searchContent);
+		return blogs;
 	}
 
 	@Override

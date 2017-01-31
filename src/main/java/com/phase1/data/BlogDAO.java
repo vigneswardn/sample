@@ -19,4 +19,6 @@ public interface BlogDAO {
 	public void update(Blog blog);
 	
 	public List<Blog> readAllFavourites(Users user);
+	
+	public List<Blog> searchBlog(String searchContent);
 }
