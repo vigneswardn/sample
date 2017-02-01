@@ -38,6 +38,15 @@ public class BlogController {
 		return Response.ok().entity(blog).build();
 	}
 	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getBlogs/")
+	public Response getBlogs(Users user) {
+		BloggerImpl impl = new BloggerImpl();
+		Set<Blog> blogs = impl.getBlogs(user);
+		return Response.ok().entity(blogs).build();
+	}
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/searchBlog/{searchContent}")
@@ -55,7 +64,7 @@ public class BlogController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/addBlog/")
 	public Response addBlog(Blog blog) {
-		if(blog == null || blog.getBlogId() == null || blog.getContent() == null || blog.getContent().trim().length() == 0 || blog.getTitle() == null) {
+		if(blog == null || blog.getContent() == null || blog.getContent().trim().length() == 0 || blog.getTitle() == null) {
 			throw new BloggerException("Please provide all mandatory fields.");
 		}
 		BloggerImpl impl = new BloggerImpl();

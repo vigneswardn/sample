@@ -9,6 +9,7 @@ import com.phase1.api.dto.Blog;
 import com.phase1.api.dto.Comments;
 import com.phase1.api.dto.Invites;
 import com.phase1.api.dto.Users;
+import com.phase1.api.exception.BloggerException;
 import com.phase1.data.BlogDAO;
 import com.phase1.data.BlogDAOImpl;
 import com.phase1.data.UserDAO;
@@ -39,7 +40,7 @@ public class BloggerImpl implements Blogger {
 			user = userDAO.readById(user);
 			user.getBlogs().add(blog);
 			// update user with blog info
-			userDAO.update(user);
+			userDAO.updateBlogForUser(user);
 		}
 	}
 
@@ -48,6 +49,8 @@ public class BloggerImpl implements Blogger {
 		blog = blogDAO.read(blog);
 		return blog;
 	}
+	
+	
 
 	@Override
 	public List<Blog> searchBlog(String searchContent) {
@@ -101,6 +104,13 @@ public class BloggerImpl implements Blogger {
 	@Override
 	public List<Blog> getAllFavourites(Users user) {
 		List<Blog> blogs = blogDAO.readAllFavourites(user);
+		return blogs;
+	}
+
+	@Override
+	public Set<Blog> getBlogs(Users user) throws BloggerException {
+		Users existingUser = userDAO.readById(user);
+		Set<Blog> blogs = existingUser.getBlogs();
 		return blogs;
 	}
 

@@ -81,5 +81,15 @@ public class UserDAOImpl implements UserDAO {
 		return userObj;
 	}
 
+	@Override
+	public Users updateBlogForUser(Users user) {
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		user = em.merge(user);
+		em.getTransaction().commit();
+		em.close();
+		return user;
+	}
+
 
 }

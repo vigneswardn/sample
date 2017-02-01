@@ -13,4 +13,6 @@ public interface UserDAO {
 	public Users readByName(Users user);
 	
 	public Users readyByEmail(String email);
+	
+	public Users updateBlogForUser(Users user);
 }

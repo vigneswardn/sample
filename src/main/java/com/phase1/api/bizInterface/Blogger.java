@@ -24,4 +24,6 @@ public interface Blogger {
 	public String inviteUsers(Invites invites) throws BloggerException;
 	
 	public List<Blog> getAllFavourites(Users user) throws BloggerException;
+	
+	public Set<Blog> getBlogs(Users user) throws BloggerException;
 }

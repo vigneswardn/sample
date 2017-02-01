@@ -2,6 +2,7 @@ $(document).ready(function(){
 	var globalUserId = 0;
 	var globalUserFirstName = 0;
 	var globalUserName = 0;
+	var urlPart1='http://localhost:8080/phase1/blogger';
 	/* Hide fields Not required*/
 	$("#loginFormDiv").show();
 	$("#registerFormDiv").hide();
@@ -20,7 +21,7 @@ $(document).ready(function(){
 			password : $("#loginPassword").val()
 		};
 		$.ajax({
-			url : 'http://localhost:8080/phase1/blogger/user/getUser/',
+			url : urlPart1+'/user/getUser/',
 			type : 'POST',
 			contentType: 'application/json',
 			crossDomain : true,
@@ -34,7 +35,7 @@ $(document).ready(function(){
 				//$("#updateProfile")= String(globalUserFirstName);
 				$("#favoriteDiv").show(
 					function() {
-						var urlVal = 'http://localhost:8080/phase1/blogger/blog/getFavourites/'+String(globalUserId);
+						var urlVal = urlPart1+'/blog/getFavourites/'+String(globalUserId);
 						$.ajax({
 							url : urlval,
 							type : 'get',
@@ -54,7 +55,7 @@ $(document).ready(function(){
 				$("#chatAreaDiv").show(
 					function() {
 						$.ajax({
-							url : 'http://localhost:8080/phase1/blogger/chat/getChats',
+							url : urlPart1+'/chat/getChats',
 							type : 'get',
 							contenttype: 'application/json',
 							accept : 'application/json',
@@ -91,7 +92,7 @@ $(document).ready(function(){
 			phone : $("#registerPhone").val()
 		};
 		$.ajax({
-			url : 'http://localhost:8080/phase1/blogger/user/addUser/',
+			url : urlPart1+'/user/addUser/',
 			type : 'POST',
 			contentType: 'application/json',
 			crossDomain : true,
@@ -131,7 +132,7 @@ $(document).ready(function(){
 			//users : 
 		};
 		$.ajax({
-			url : 'http://localhost:8080/phase1/blogger/blog/addBlog/',
+			url : urlPart1+'/blog/addBlog/',
 			type : 'post',
 			contentType: 'application/json',
 			accept : 'application/json',
@@ -161,7 +162,7 @@ $(document).ready(function(){
 		$("#updateProfileDiv").show();
 		/* Get the user info */
 		$.ajax({
-			url : 'http://localhost:8080/phase1/blogger/user/getUser/'+ String(globalUserId),
+			url : urlPart1+'/user/getUser/'+ String(globalUserId),
 			type : 'get',
 			contentType: 'application/json',
 			accept : 'application/json',
@@ -189,7 +190,7 @@ $(document).ready(function(){
 			areaOfInterest : $("#updateProfileInterest").val()
 		};
 		$.ajax({
-			url : 'http://localhost:8080/phase1/blogger/user/updateUser/',
+			url : urlPart1+'/user/updateUser/',
 			type : 'post',
 			contentType: 'application/json',
 			accept : 'application/json',
@@ -215,7 +216,7 @@ $(document).ready(function(){
 			searchContent : $("#searchBlogInput").val()
 		};
 		$.ajax({
-			url : 'http://localhost:8080/phase1/blogger/blog/getBlog/',
+			url : urlPart1+'/blog/getBlog/',
 			type : 'post',
 			contentType: 'application/json',
 			accept : 'application/json',
@@ -260,7 +261,7 @@ $(document).ready(function(){
 			createdBy : String(globalUserName)		
 		};
 		$.ajax({
-			url : 'http://localhost:8080/phase1/blogger/chat/addChat',
+			url : urlPart1+'/chat/addChat',
 			type : 'post',
 			contentType: 'application/json',
 			accept : 'application/json',
